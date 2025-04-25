@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart'; // Import this if not already
+import 'verify_otp_page.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -8,129 +8,91 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: SingleChildScrollView(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 20),
-              const Text(
-                'Register',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              const SizedBox(height: 24),
+              const Center(
+                child: Text('Register',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
               ),
-              const SizedBox(height: 40),
-
-              // Full name
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Full Name'),
-              ),
+              const SizedBox(height: 48),
+              const Text('Enter your mobile number'),
               const SizedBox(height: 8),
               TextField(
                 decoration: InputDecoration(
+                  prefixText: '+91  ',
+                  suffixIcon: const Icon(Icons.check_circle),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-
-              // Mobile number
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Mobile Number'),
-              ),
+              const SizedBox(height: 16),
+              const Text('Enter your email'),
               const SizedBox(height: 8),
               TextField(
-                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                  prefixText: '+91 ',
+                  hintText: 'abc12@gmail.com',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-
-              // Password
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Password'),
-              ),
+              const SizedBox(height: 16),
+              const Text('Enter your password'),
               const SizedBox(height: 8),
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.visibility_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-
-              // Confirm Password
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Confirm Password'),
-              ),
+              const SizedBox(height: 16),
+              const Text('Re-Enter your password'),
               const SizedBox(height: 8),
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.visibility_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
               ),
-
-              const SizedBox(height: 30),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Register logic
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const VerifyOtpPage())),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text('Register'),
                 ),
+                child: const Text('Sign Up'),
               ),
-
-              const SizedBox(height: 20),
-
-              // Already have an account? Login
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Already have an account? "),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => const LoginPage()),
-                      );
-                    },
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+                    onTap: () => Navigator.pop(context),
+                    child: const Text('Login',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
             ],
           ),
         ),
