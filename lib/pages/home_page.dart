@@ -1,6 +1,8 @@
-//home_page.dart
 import 'package:flutter/material.dart';
-import '../widgets/fluid_nav_bar.dart'; // Import the navbar
+import '../widgets/fluid_nav_bar.dart'; 
+import 'messages_page.dart';
+import 'notifications_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +15,35 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   void _onItemTapped(int index) {
+    if (index == _currentIndex) return; // Don't navigate if already on this page
     setState(() => _currentIndex = index);
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MessagesPage()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NotificationsPage()),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ProfilePage()),
+        );
+        break;
+    }
   }
 
   Widget _buildTaskCard() {

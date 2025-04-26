@@ -1,6 +1,8 @@
-//profile_page.dart
 import 'package:flutter/material.dart';
-import '/widgets/fluid_nav_bar.dart'; // Make sure you import your custom navbar
+import '../widgets/fluid_nav_bar.dart'; 
+import 'home_page.dart';
+import 'messages_page.dart';
+import 'notifications_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,6 +14,37 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool pushNotification = true;
   bool darkMode = true;
+  int _currentIndex = 3;
+
+  void _onItemTapped(int index) {
+    if (index == _currentIndex) return;
+    setState(() => _currentIndex = index);
+
+    // Navigate to the correct page
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MessagesPage()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NotificationsPage()),
+        );
+        break;
+      case 3:
+        // Already on ProfilePage
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +63,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ),
                     const CircleAvatar(
@@ -62,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     actionTile('Register as Admin', Colors.white),
                     const SizedBox(height: 10),
                     actionTile('Logout', Colors.redAccent),
-                    const SizedBox(height: 80), // To make space for navbar
+                    const SizedBox(height: 80), // Space for nav bar
                   ],
                 ),
               ),
@@ -70,8 +105,8 @@ class _ProfilePageState extends State<ProfilePage> {
             Align(
               alignment: Alignment.bottomCenter,
               child: FluidNavBar(
-                currentIndex: 3,
-                onTap: (index) {},
+                currentIndex: _currentIndex,
+                onTap: _onItemTapped,
               ),
             ),
           ],

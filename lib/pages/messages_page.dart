@@ -1,6 +1,8 @@
-// messages_page.dart
 import 'package:flutter/material.dart';
 import '../widgets/fluid_nav_bar.dart';
+import 'home_page.dart';
+import 'notifications_page.dart';
+import 'profile_page.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -22,18 +24,48 @@ class _MessagesPageState extends State<MessagesPage> {
   int _currentIndex = 1;
 
   void _onItemTapped(int index) {
+    if (index == _currentIndex) return; // Don't navigate if already on this page
     setState(() => _currentIndex = index);
+
+    // Navigate to the correct page
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MessagesPage()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NotificationsPage()),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ProfilePage()),
+        );
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF2E2E2E),
       body: SafeArea(
         child: Column(
           children: [
             const Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text("Chats", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              child: Text("Chats", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
