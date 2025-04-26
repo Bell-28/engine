@@ -1,4 +1,6 @@
+//home_page.dart
 import 'package:flutter/material.dart';
+import '../widgets/fluid_nav_bar.dart'; // Import the navbar
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -7,40 +9,11 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  final List<IconData> _navItems = [
-    Icons.home,
-    Icons.chat_bubble_outline,
-    Icons.notifications_none,
-    Icons.person_outline,
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 400),
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 1.0, end: 1.2)
-        .chain(CurveTween(curve: Curves.easeOutBack))
-        .animate(_controller);
-    _controller.forward();
-  }
 
   void _onItemTapped(int index) {
     setState(() => _currentIndex = index);
-    _controller.forward(from: 0.0);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   Widget _buildTaskCard() {
@@ -151,55 +124,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
         ),
       ),
-      bottomNavigationBar: _fluidNavBar(_navItems),
-    );
-  }
-
-  Widget _fluidNavBar(List<IconData> items) {
-    return BottomAppBar(
-      color: const Color(0xFF0D1B2A),
-      child: SizedBox(
-        height: 70,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            double itemWidth = constraints.maxWidth / items.length;
-            double circleLeft = itemWidth * _currentIndex + itemWidth / 2 - 25;
-
-            return Stack(
-              children: [
-                AnimatedPositioned(
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeOutBack,
-                  left: circleLeft,
-                  top: 10,
-                  child: ScaleTransition(
-                    scale: _animation,
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: List.generate(items.length, (index) {
-                    return IconButton(
-                      icon: Icon(
-                        items[index],
-                        color: _currentIndex == index ? Colors.black : Colors.white,
-                      ),
-                      onPressed: () => _onItemTapped(index),
-                    );
-                  }),
-                ),
-              ],
-            );
-          },
-        ),
+      bottomNavigationBar: FluidNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
